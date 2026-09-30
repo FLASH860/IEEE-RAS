@@ -2,7 +2,7 @@ import Hero from './components/Hero'
 import About from './components/About'
 import Leadership from './components/Leadership'
 import TeamEvents from './components/TeamEvents'
-import Section from './components/Section'
+import Contact from './components/Contact'
 
 export default function App() {
   return (
@@ -11,9 +11,7 @@ export default function App() {
       <About />
       <Leadership />
       <TeamEvents />
-      
-      <Section id="projects" index="04" title="Section 04" />
-      <Section id="contact" index="05" title="Section 05" />
+      <Contact />
     </main>
   )
 }

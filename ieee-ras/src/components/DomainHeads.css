@@ -24,9 +24,9 @@
   --color-neutral-900: #070d12;
   --color-divider: color-mix(in srgb, #e9e9ed 16%, transparent);
 
-  --font-heading: "Inter", system-ui, sans-serif;
+  --font-heading: var(--font-quantico);
   --font-heading-weight: 500;
-  --font-body: "Inter", system-ui, sans-serif;
+  --font-body: var(--font-quantico);
 
   --space-1: 2.8px;
   --space-2: 5.6px;
