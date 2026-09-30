@@ -12,14 +12,14 @@ const BACKGROUND = true // animated node background
 
 // [name, role, domain, photo]. Put photos in public/assets/team/ and use '/assets/team/name.jpg'
 const HEADS = [
-  ['Member Name', 'Domain Head', 'Microcontrollers', null],
-  ['Member Name', 'Domain Head', 'Microcontrollers', null],
-  ['Member Name', 'Domain Head', 'Image Processing', null],
-  ['Member Name', 'Domain Head', 'Image Processing', null],
-  ['Member Name', 'Domain Head', 'Robot Operating System', null],
-  ['Member Name', 'Domain Head', 'Robot Operating System', null],
-  ['Member Name', 'Domain Head', 'Kinematics & Control', null],
-  ['Member Name', 'Domain Head', 'Kinematics & Control', null],
+  ['Kanishq Surendran', 'Tech Head', 'Website', '/assets/kanishq-photo.png'],
+  ['Mohammed Ayaan', 'Head of Logistics', '', '/assets/ayaan.png'],
+  ['Varun J C', 'Design', '', '/assets/varun.png'],
+  ['Vikas KP', 'Head of Marketing', '', '/assets/vikas.png'],
+  ['Shanmitha Chennupati', 'Head of Technical', 'Hardware', '/assets/Shanmitha.png'],
+  ['Sravya Yadavalli', 'Head of Event Management', '', '/assets/sravya.png'],
+  ['Sathvik Bhushan Godi', 'Head of Content Writing', '', '/assets/sathvik.jpeg'],
+  ['Mohit K', 'Technical Domain Head', 'Coding', '/assets/mohit.png'],
 ]
 
 const P = 1100 // perspective, px
