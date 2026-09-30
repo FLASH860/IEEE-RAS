@@ -368,6 +368,9 @@ export default function FocusDomains() {
       if (AUTO_CYCLE && !hovering.current) setActive((a) => (a + 1) % 4)
     }, 4000)
     const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    // Only animate while the section is on screen (first frame always draws)
+    let visible = false
+    let running = true
     const tick = (now) => {
       const t = now * MOTION
       const dpr = Math.min(2, window.devicePixelRatio || 1)
@@ -388,11 +391,21 @@ export default function FocusDomains() {
         const my = mouse.current.y - rc.top
         SCENES[i].call(sceneState.current, ctx, w, h, still ? 0 : t, mx >= 0 && my >= 0 && mx <= w && my <= h ? { x: mx, y: my } : null)
       })
-      if (!still) raf = requestAnimationFrame(tick)
+      if (!still && visible) raf = requestAnimationFrame(tick)
+      else running = false
     }
     raf = requestAnimationFrame(tick)
+    const io = new IntersectionObserver(([entry]) => {
+      visible = entry.isIntersecting
+      if (visible && !running && !still) {
+        running = true
+        raf = requestAnimationFrame(tick)
+      }
+    })
+    io.observe(rootRef.current)
     return () => {
       cancelAnimationFrame(raf)
+      io.disconnect()
       clearInterval(timer)
       window.removeEventListener('pointermove', onMove)
     }

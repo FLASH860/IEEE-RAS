@@ -1,4 +1,5 @@
 import { motion } from 'motion/react'
+import BgVideo from './BgVideo'
 
 // Put photos in public/assets/team/ and set photo: '/assets/team/name.jpg'
 const LEADERS = [
@@ -37,14 +38,7 @@ export default function Leadership() {
       id="leadership"
       className="relative flex min-h-screen w-full items-center overflow-hidden border-t border-rule bg-void px-8 py-20 md:px-14"
     >
-      <video
-        className="absolute inset-0 h-full w-full object-cover"
-        src="/assets/back.mp4"
-        autoPlay
-        muted
-        loop
-        playsInline
-      />
+      <BgVideo className="absolute inset-0 h-full w-full object-cover" src="/assets/back.mp4" />
       <div className="absolute inset-0 bg-void/40" />
 
       <div className="relative z-10 mx-auto w-full max-w-6xl">
@@ -76,7 +70,7 @@ export default function Leadership() {
             >
               <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-105">
                 {p.photo ? (
-                  <img src={p.photo} alt={p.name} className="h-full w-full object-cover" />
+                  <img src={p.photo} alt={p.name} loading="lazy" decoding="async" className="h-full w-full object-cover" />
                 ) : (
                   <Silhouette />
                 )}

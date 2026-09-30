@@ -18,7 +18,11 @@ export default function TeamEvents() {
   useEffect(() => {
     let cur = 0
     let raf
+    // Skip per-frame work while the section is far off screen (and the easing has settled)
+    let near = true
+    let running = true
     const loop = () => {
+      let settled = false
       const t = trackRef.current
       const c = carRef.current
       const img = imgRef.current
@@ -29,6 +33,7 @@ export default function TeamEvents() {
         const r = t.getBoundingClientRect()
         const p = clamp(-r.top / (r.height - vh))
         cur += (p - cur) * 0.12
+        settled = Math.abs(p - cur) < 0.0005
         const k = clamp((cur - HOLD) / (1 - HOLD))
 
         // 1. cards fade + drift up
@@ -61,10 +66,25 @@ export default function TeamEvents() {
           tx.style.pointerEvents = k > 0.7 ? 'auto' : 'none'
         }
       }
-      raf = requestAnimationFrame(loop)
+      if (!near && settled) running = false
+      else raf = requestAnimationFrame(loop)
     }
     raf = requestAnimationFrame(loop)
-    return () => cancelAnimationFrame(raf)
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        near = entry.isIntersecting
+        if (near && !running) {
+          running = true
+          raf = requestAnimationFrame(loop)
+        }
+      },
+      { rootMargin: '100% 0px' },
+    )
+    io.observe(trackRef.current)
+    return () => {
+      cancelAnimationFrame(raf)
+      io.disconnect()
+    }
   }, [])
 
   return (

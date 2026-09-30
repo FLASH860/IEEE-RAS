@@ -1,21 +1,46 @@
+import { lazy, Suspense, useEffect } from 'react'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import About from './components/About'
-import FocusDomains from './components/FocusDomains'
 import Leadership from './components/Leadership'
-import TeamEvents from './components/TeamEvents'
-import Contact from './components/Contact'
+
+const loadFocus = () => import('./components/FocusDomains')
+const loadEvents = () => import('./components/TeamEvents')
+const loadContact = () => import('./components/Contact')
+
+const FocusDomains = lazy(loadFocus)
+const TeamEvents = lazy(loadEvents)
+const Contact = lazy(loadContact)
+
+// Reserve roughly the final height so nothing jumps while a chunk arrives
+const placeholder = (minHeight) => <div style={{ minHeight, background: '#05080c' }} />
 
 export default function App() {
+  // Fetch the below-the-fold chunks right after first paint
+  useEffect(() => {
+    const idle = window.requestIdleCallback || ((fn) => setTimeout(fn, 200))
+    idle(() => {
+      loadFocus()
+      loadEvents()
+      loadContact()
+    })
+  }, [])
+
   return (
     <main>
       <Navbar />
       <Hero />
       <About />
-      <FocusDomains />
+      <Suspense fallback={placeholder('100vh')}>
+        <FocusDomains />
+      </Suspense>
       <Leadership />
-      <TeamEvents />
-      <Contact />
+      <Suspense fallback={placeholder('340vh')}>
+        <TeamEvents />
+      </Suspense>
+      <Suspense fallback={placeholder('100vh')}>
+        <Contact />
+      </Suspense>
     </main>
   )
 }

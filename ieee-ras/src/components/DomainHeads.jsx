@@ -324,6 +324,8 @@ export default function DomainHeads() {
                     <img
                       src={photo}
                       alt=""
+                      loading="lazy"
+                      decoding="async"
                       draggable="false"
                       style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
                     />
