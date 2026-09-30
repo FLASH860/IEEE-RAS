@@ -1,10 +1,11 @@
 import { motion } from 'motion/react'
+import BgVideo from './BgVideo'
 
 // Put photos in public/assets/team/ and set photo: '/assets/team/name.jpg'
 const LEADERS = [
-  { name: 'Member Name', role: 'Faculty Advisor', photo: null },
-  { name: 'Member Name', role: 'Chairperson', photo: null },
-  { name: 'Member Name', role: 'Vice Chairperson', photo: null },
+  { name: 'Nithilashree MR', role: 'Co Head', photo: '/assets/Nithilashree.png' },
+  { name: 'Modhak Kushalappa', role: 'Head', photo: '/assets/modhak.png' },
+  { name: 'J Akhil', role: 'Secretary', photo: '/assets/Akhil.png' },
 ]
 
 const fadeUp = {
@@ -35,9 +36,12 @@ export default function Leadership() {
   return (
     <section
       id="leadership"
-      className="relative flex min-h-screen w-full items-center border-t border-rule bg-void px-8 py-20 md:px-14"
+      className="relative flex min-h-screen w-full items-center overflow-hidden border-t border-rule bg-void px-8 py-20 md:px-14"
     >
-      <div className="mx-auto w-full max-w-5xl">
+      <BgVideo className="absolute inset-0 h-full w-full object-cover" src="/assets/back.mp4" />
+      <div className="absolute inset-0 bg-void/40" />
+
+      <div className="relative z-10 mx-auto w-full max-w-6xl">
         <motion.div
           variants={fadeUp}
           initial="hidden"
@@ -56,17 +60,17 @@ export default function Leadership() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, amount: 0.2 }}
-          className="grid gap-6 md:grid-cols-3 md:gap-12"
+          className="grid items-center gap-6 md:grid-cols-3 md:gap-16"
         >
           {LEADERS.map((p, i) => (
             <motion.div
               key={i}
               variants={fadeUp}
-              className="group relative aspect-[3/4] overflow-hidden rounded-2xl border border-rule bg-panel transition-colors hover:border-pulse/60"
+              className={`group relative aspect-[3/4] overflow-hidden rounded-2xl border border-rule bg-panel transition-colors hover:border-pulse/60 ${i === 1 ? '' : 'md:scale-90'}`}
             >
               <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-105">
                 {p.photo ? (
-                  <img src={p.photo} alt={p.name} className="h-full w-full object-cover" />
+                  <img src={p.photo} alt={p.name} loading="lazy" decoding="async" className="h-full w-full object-cover" />
                 ) : (
                   <Silhouette />
                 )}

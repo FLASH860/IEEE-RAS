@@ -87,6 +87,9 @@ export default function Contact() {
     const ro = new ResizeObserver(resize)
     ro.observe(cv)
 
+    // Only animate while the section is on screen (first frame always draws)
+    let visible = false
+    let running = true
     const tick = (t) => {
       ctx.clearRect(0, 0, w, h)
       m.k += ((m.on ? 1 : 0) - m.k) * 0.05
@@ -122,12 +125,22 @@ export default function Contact() {
         ctx.fillStyle = g
         ctx.fillRect(0, 0, w, h)
       }
-      if (!still) raf = requestAnimationFrame(tick)
+      if (!still && visible) raf = requestAnimationFrame(tick)
+      else running = false
     }
     raf = requestAnimationFrame(tick)
+    const io = new IntersectionObserver(([entry]) => {
+      visible = entry.isIntersecting
+      if (visible && !running && !still) {
+        running = true
+        raf = requestAnimationFrame(tick)
+      }
+    })
+    io.observe(cv)
 
     return () => {
       cancelAnimationFrame(raf)
+      io.disconnect()
       window.removeEventListener('pointermove', onMove)
       document.removeEventListener('pointerleave', onLeave)
       ro.disconnect()

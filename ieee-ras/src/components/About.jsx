@@ -1,4 +1,5 @@
 import { motion } from 'motion/react'
+import BgVideo from './BgVideo'
 
 const GROUPS = [
   {
@@ -65,14 +66,7 @@ export default function About() {
       id="about"
       className="relative flex min-h-screen w-full items-center overflow-hidden border-t border-rule bg-void px-8 py-20 md:px-14"
     >
-      <video
-        className="absolute inset-0 h-full w-full object-cover"
-        src="/assets/back.mp4"
-        autoPlay
-        muted
-        loop
-        playsInline
-      />
+      <BgVideo className="absolute inset-0 h-full w-full object-cover" src="/assets/back.mp4" />
       <div className="absolute inset-0 bg-void/40" />
 
       <div className="relative z-10 mx-auto grid w-full max-w-7xl gap-12 lg:grid-cols-[2fr_3fr] lg:gap-16">
