@@ -1,6 +1,4 @@
 import { useEffect, useRef, useState } from 'react'
-import '@fontsource/inter/400.css'
-import '@fontsource/inter/500.css'
 import './DomainHeads.css'
 
 // ---- Tweak these ----
