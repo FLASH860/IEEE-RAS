@@ -1,0 +1,96 @@
+/* Scoped port of the Claude Design "Card Carousel" (Nocturne tokens, cyan overrides). */
+.cc {
+  --color-bg: #05080c;
+  --color-surface: #0a131a;
+  --color-text: #e6f2f6;
+  --color-accent: #1fd1ec;
+  --color-accent-100: #c9f6fd;
+  --color-accent-200: #8eeefb;
+  --color-accent-300: #4fe0f4;
+  --color-accent-400: #2fd8ef;
+  --color-accent-500: #1fd1ec;
+  --color-accent-600: #12a9c0;
+  --color-accent-700: #0c6f80;
+  --color-accent-800: #0a3f4a;
+  --color-accent-900: #08242b;
+  --color-neutral-100: #e6f2f6;
+  --color-neutral-200: #c3d2d9;
+  --color-neutral-300: #9aabb4;
+  --color-neutral-400: #73858f;
+  --color-neutral-500: #4f616b;
+  --color-neutral-600: #2c3c45;
+  --color-neutral-700: #16242d;
+  --color-neutral-800: #0d1820;
+  --color-neutral-900: #070d12;
+  --color-divider: color-mix(in srgb, #e9e9ed 16%, transparent);
+
+  --font-heading: "Inter", system-ui, sans-serif;
+  --font-heading-weight: 500;
+  --font-body: "Inter", system-ui, sans-serif;
+
+  --space-1: 2.8px;
+  --space-2: 5.6px;
+  --space-3: 8.4px;
+  --space-4: 11.2px;
+  --space-6: 16.8px;
+  --space-8: 22.4px;
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 14px;
+
+  --shadow-sm: 0 0 0 1px #3f424d;
+  --shadow-md: 0 0 0 1px #595d6c, 0 6px 18px rgba(0, 0, 0, 0.55);
+  --shadow-lg: 0 0 0 1px #9397ab, 0 16px 40px rgba(0, 0, 0, 0.65);
+
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: radial-gradient(120% 70% at 50% 45%, var(--color-neutral-800) 0%, var(--color-bg) 70%);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.55;
+  font-weight: 400;
+}
+
+.cc *, .cc *::before, .cc *::after { box-sizing: border-box; }
+.cc h1 { line-height: 1.12; }
+.cc :focus { outline: none; }
+.cc :focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+.cc img { display: block; max-width: 100%; }
+
+/* — buttons — */
+.cc .btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  cursor: pointer; text-decoration: none;
+  font-family: var(--font-heading); font-weight: var(--font-heading-weight);
+  font-size: 14px; line-height: 1.2; color: var(--color-text);
+  background: transparent; border: 1px solid transparent;
+  padding: var(--space-2) calc(var(--space-3) * 1.2);
+  border-radius: var(--radius-md);
+}
+.cc .btn svg { display: block; }
+.cc .btn-secondary { border-color: var(--color-divider); }
+.cc .btn-secondary:hover { background: color-mix(in srgb, var(--color-text) 7%, transparent); }
+.cc .btn-secondary:active { background: color-mix(in srgb, var(--color-text) 14%, transparent); }
+.cc .btn-icon { width: 36px; height: 36px; padding: 0; }
+
+/* — cards — */
+.cc .card {
+  display: flex; flex-direction: column; gap: var(--space-2);
+  padding: var(--space-3); border-radius: var(--radius-md); background: var(--color-surface);
+}
+.cc .card-kicker { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-accent); position: relative; }
+.cc .card-title {
+  font-family: var(--font-heading); font-weight: var(--font-heading-weight);
+  font-size: 17px; line-height: 1.2; position: relative;
+}
+.cc .card-body { margin: 0; font-size: 14px; opacity: 0.8; flex: 1; position: relative; }
+.cc .card-meta {
+  display: flex; align-items: center; gap: 6px; font-size: 12px;
+  color: color-mix(in srgb, var(--color-text) 50%, transparent);
+  position: relative;
+}
