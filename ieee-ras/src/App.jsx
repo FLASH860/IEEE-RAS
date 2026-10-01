@@ -41,6 +41,9 @@ export default function App() {
       <Suspense fallback={placeholder('100vh')}>
         <Contact />
       </Suspense>
+      <footer className="border-t border-rule bg-void px-5 py-6 text-center text-xs tracking-wide text-dim">
+        © 2026 IEEE RAS PESU - EC Campus. All Rights Reserved.
+      </footer>
     </main>
   )
 }
