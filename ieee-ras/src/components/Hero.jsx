@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
 
 const WORDS = ['Build', 'Automate', 'Innovate']
@@ -30,13 +30,28 @@ function RotatingWord() {
 }
 
 export default function Hero() {
+  const videoRef = useRef(null)
+
+  // phones: don't keep decoding the hero video once it has scrolled away
+  useEffect(() => {
+    const v = videoRef.current
+    if (!v || !window.matchMedia('(max-width: 767px)').matches) return
+    const io = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) v.play().catch(() => {})
+      else v.pause()
+    })
+    io.observe(v)
+    return () => io.disconnect()
+  }, [])
+
   return (
     <section
       id="home"
-      className="relative h-screen w-full snap-start overflow-hidden bg-void"
+      className="relative h-screen w-full snap-start overflow-hidden bg-void max-md:h-svh"
     >
       {/* Background video. Drop your clip at public/hero.mp4 and a still at public/hero-poster.jpg */}
       <video
+        ref={videoRef}
         className="absolute inset-0 h-full w-full object-cover"
         src="/assets/robot.mp4"
         autoPlay
@@ -46,15 +61,15 @@ export default function Hero() {
       />
 
       {/* Left-side fade so text stays readable over the video */}
-      <div className="absolute inset-0 bg-gradient-to-r from-void/80 via-void/20 to-transparent" />
+      <div className="hero-fade absolute inset-0 bg-gradient-to-r from-void/80 via-void/20 to-transparent" />
 
       {/* Text: bottom-left */}
-      <div className="absolute bottom-[0.4rem] left-0 max-w-3xl p-8 md:bottom-[0.125rem] md:p-14">
+      <div className="absolute bottom-[0.4rem] left-0 max-w-3xl p-8 max-md:right-0 md:bottom-[0.125rem] md:p-14">
         <motion.p
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: 'easeOut' }}
-          className="mb-3 text-xs uppercase tracking-[0.3em] text-pulse"
+          className="mb-3 text-xs uppercase tracking-[0.3em] text-pulse max-md:tracking-[0.18em]"
         >
           IEEE Robotics and Automation Society · PES University EC Campus
         </motion.p>
@@ -90,17 +105,17 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.65, ease: 'easeOut' }}
-          className="mt-6 flex gap-4"
+          className="mt-6 flex gap-4 max-md:grid max-md:grid-cols-2 max-md:gap-3"
         >
           <a
             href="#events"
-            className="bg-pulse px-6 py-3 text-sm font-bold uppercase tracking-wider text-void transition hover:bg-haze"
+            className="bg-pulse px-6 py-3 text-sm font-bold uppercase tracking-wider text-void transition hover:bg-haze max-md:flex max-md:min-h-12 max-md:items-center max-md:justify-center max-md:px-2 max-md:text-center max-md:text-xs"
           >
             Explore Events
           </a>
           <a
             href="#about"
-            className="border border-pulse/50 px-6 py-3 text-sm font-bold uppercase tracking-wider text-pulse transition hover:bg-pulse/10"
+            className="border border-pulse/50 px-6 py-3 text-sm font-bold uppercase tracking-wider text-pulse transition hover:bg-pulse/10 max-md:flex max-md:min-h-12 max-md:items-center max-md:justify-center max-md:px-2 max-md:text-center max-md:text-xs"
           >
             Know More
           </a>

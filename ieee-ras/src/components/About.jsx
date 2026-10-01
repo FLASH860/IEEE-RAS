@@ -64,7 +64,7 @@ export default function About() {
   return (
     <section
       id="about"
-      className="relative flex min-h-screen w-full items-center overflow-hidden border-t border-rule bg-void px-8 py-20 md:px-14"
+      className="relative flex min-h-screen w-full items-center overflow-hidden border-t border-rule bg-void px-8 py-20 max-md:min-h-svh max-md:px-5 md:px-14"
     >
       <BgVideo className="absolute inset-0 h-full w-full object-cover" src="/assets/back.mp4" />
       <div className="absolute inset-0 bg-void/40" />

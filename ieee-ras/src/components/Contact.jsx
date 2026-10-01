@@ -217,6 +217,7 @@ export default function Contact() {
     <section id="contact" className="ras-contact">
       <style>{CSS}</style>
       <div
+        className="ct-outer"
         style={{
           position: 'relative',
           minHeight: '100vh',
@@ -230,6 +231,7 @@ export default function Contact() {
         />
 
         <div
+          className="ct-wrap"
           style={{
             position: 'relative',
             zIndex: 1,
@@ -245,7 +247,7 @@ export default function Contact() {
           }}
         >
           {/* left */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', maxWidth: '540px' }}>
+          <div className="ct-left" style={{ display: 'flex', flexDirection: 'column', gap: '24px', maxWidth: '540px' }}>
             <div
               style={{
                 fontSize: '13px',
@@ -257,6 +259,7 @@ export default function Contact() {
               Get in touch
             </div>
             <h1
+              className="ct-h1"
               style={{
                 margin: 0,
                 fontFamily: 'var(--font-heading)',
@@ -271,6 +274,7 @@ export default function Contact() {
               Let&apos;s build something <span style={{ color: 'var(--color-accent)' }}>real</span>
             </h1>
             <p
+              className="ct-p"
               style={{
                 margin: 0,
                 fontSize: '18px',
@@ -282,9 +286,9 @@ export default function Contact() {
               Recruitment is open to first and second year students. Fill in the membership form, or reach out on any
               channel with your questions.
             </p>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', paddingTop: '8px' }}>
+            <div className="ct-btns" style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', paddingTop: '8px' }}>
               <a
-                className="btn-primary"
+                className="btn-primary ct-btn"
                 href={formUrl}
                 target="_blank"
                 rel="noopener"
@@ -305,7 +309,7 @@ export default function Contact() {
                 Become a member
               </a>
               <a
-                className="btn-ghost"
+                className="btn-ghost ct-btn"
                 href={phoneHref}
                 onClick={phoneClick}
                 style={{
@@ -351,6 +355,7 @@ export default function Contact() {
                 target="_blank"
                 rel="noopener"
                 aria-label="Become a member"
+                className="ct-hub"
                 style={{
                   position: 'absolute',
                   left: '50%',
@@ -383,6 +388,7 @@ export default function Contact() {
                   }}
                 >
                   <div
+                    className="ct-hub-txt"
                     style={{
                       fontFamily: 'var(--font-heading)',
                       fontWeight: 600,
@@ -404,15 +410,16 @@ export default function Contact() {
                 onMouseEnter={() => setHover('email')}
                 onMouseLeave={() => setHover(null)}
                 aria-label="Email"
+                className="ct-node"
                 style={nodeLink('18%', '20%')}
               >
-                <div style={nodeCircle('email')}>
+                <div className="ct-circle" style={nodeCircle('email')}>
                   <svg {...svgProps}>
                     <rect x="3" y="5" width="18" height="14" rx="2" />
                     <path d="M3 7l9 6 9-6" />
                   </svg>
                 </div>
-                <span style={nodeLabel('email')}>Email</span>
+                <span className="ct-label" style={nodeLabel('email')}>Email</span>
               </a>
 
               {/* instagram */}
@@ -423,16 +430,17 @@ export default function Contact() {
                 onMouseEnter={() => setHover('instagram')}
                 onMouseLeave={() => setHover(null)}
                 aria-label="Instagram"
+                className="ct-node"
                 style={nodeLink('82%', '22%')}
               >
-                <div style={nodeCircle('instagram')}>
+                <div className="ct-circle" style={nodeCircle('instagram')}>
                   <svg {...svgProps}>
                     <rect x="3" y="3" width="18" height="18" rx="5" />
                     <circle cx="12" cy="12" r="4" />
                     <circle cx="17.5" cy="6.5" r="0.6" fill="currentColor" />
                   </svg>
                 </div>
-                <span style={nodeLabel('instagram')}>Instagram</span>
+                <span className="ct-label" style={nodeLabel('instagram')}>Instagram</span>
               </a>
 
               {/* linkedin */}
@@ -443,15 +451,16 @@ export default function Contact() {
                 onMouseEnter={() => setHover('linkedin')}
                 onMouseLeave={() => setHover(null)}
                 aria-label="LinkedIn"
+                className="ct-node"
                 style={nodeLink('84%', '78%')}
               >
-                <div style={nodeCircle('linkedin')}>
+                <div className="ct-circle" style={nodeCircle('linkedin')}>
                   <svg {...svgProps}>
                     <rect x="3" y="3" width="18" height="18" rx="3" />
                     <path d="M8 10.5v6.5M8 7.5v.01M12 17v-6.5M12 13.5a2.5 2.5 0 0 1 5 0V17" />
                   </svg>
                 </div>
-                <span style={nodeLabel('linkedin')}>LinkedIn</span>
+                <span className="ct-label" style={nodeLabel('linkedin')}>LinkedIn</span>
               </a>
 
               {/* phone */}
@@ -461,14 +470,15 @@ export default function Contact() {
                 onMouseEnter={() => setHover('phone')}
                 onMouseLeave={() => setHover(null)}
                 aria-label="Phone"
+                className="ct-node"
                 style={nodeLink('18%', '80%')}
               >
-                <div style={nodeCircle('phone')}>
+                <div className="ct-circle" style={nodeCircle('phone')}>
                   <svg {...svgProps}>
                     <path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z" />
                   </svg>
                 </div>
-                <span style={nodeLabel('phone')}>Phone</span>
+                <span className="ct-label" style={nodeLabel('phone')}>Phone</span>
               </a>
             </div>
           </div>
