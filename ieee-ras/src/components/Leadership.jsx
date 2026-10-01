@@ -66,7 +66,7 @@ export default function Leadership() {
             <motion.div
               key={i}
               variants={fadeUp}
-              className={`group relative aspect-[3/4] overflow-hidden rounded-2xl border border-rule bg-panel transition-colors hover:border-pulse/60 ${i === 1 ? '' : 'md:scale-90'} max-md:mx-auto max-md:w-full max-md:max-w-[320px]`}
+              className={`group relative aspect-[3/4] overflow-hidden rounded-2xl border border-rule bg-panel transition-colors hover:border-pulse/60 ${i === 1 ? '' : 'md:scale-90'} ${['max-md:order-3', 'max-md:order-1', 'max-md:order-2'][i]} max-md:mx-auto max-md:w-full max-md:max-w-[320px]`}
             >
               <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-105">
                 {p.photo ? (

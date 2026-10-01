@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import DomainHeads from './DomainHeads'
 
 const HOLD = 0.2
@@ -13,6 +13,9 @@ export default function TeamEvents() {
   const trackRef = useRef(null)
   const carRef = useRef(null)
   const imgRef = useRef(null)
+  const cpuRef = useRef(null)
+  // the cpu image is a phone-only extra: never rendered on desktop
+  const [phone] = useState(() => window.matchMedia('(max-width: 767px)').matches)
   const stageRef = useRef(null)
   const textRef = useRef(null)
 
@@ -27,6 +30,7 @@ export default function TeamEvents() {
       const t = trackRef.current
       const c = carRef.current
       const img = imgRef.current
+      const cpu = cpuRef.current
       const tx = textRef.current
       if (t && c) {
         const vw = window.innerWidth
@@ -53,7 +57,13 @@ export default function TeamEvents() {
           const iw = img.getBoundingClientRect().width
           const start = -0.97 * iw
           const end = vw - iw - 0.05 * vw
-          img.style.transform = `translateX(${(start + (end - start) * m).toFixed(1)}px)`
+          const rx = start + (end - start) * m
+          img.style.transform = `translateX(${rx.toFixed(1)}px)`
+          // cpu rides along, its right edge tucked just behind the robot's left side
+          if (cpu) {
+            const cw = cpu.getBoundingClientRect().width
+            if (cw) cpu.style.transform = `translateX(${(rx + 0.72 * iw - cw).toFixed(1)}px)`
+          }
         }
 
         // 3. events reveal one by one
@@ -100,6 +110,25 @@ export default function TeamEvents() {
           className="ev-robot pointer-events-none absolute bottom-0 left-0 max-w-none select-none will-change-transform"
           style={{ height: 'min(92vh, 52vw)', width: 'auto', transform: 'translateX(-200vw)' }}
         />
+
+        {/* cpu: slides in alongside the robot, sitting to its left */}
+        {phone && (
+        <img
+          ref={cpuRef}
+          src="/assets/cpu.png"
+          alt=""
+          draggable="false"
+          className="ev-robot pointer-events-none absolute bottom-0 left-0 hidden max-w-none select-none will-change-transform max-md:block"
+          style={{
+            height: 'min(92vh, 52vw)',
+            width: 'auto',
+            opacity: 0.85,
+            transform: 'translateX(-300vw)',
+            WebkitMaskImage: 'linear-gradient(to right, transparent, #000 15%, #000 70%, transparent)',
+            maskImage: 'linear-gradient(to right, transparent, #000 15%, #000 70%, transparent)',
+          }}
+        />
+        )}
 
         {/* events text */}
         <div

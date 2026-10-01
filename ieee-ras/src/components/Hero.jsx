@@ -109,6 +109,14 @@ export default function Hero() {
         >
           <a
             href="#events"
+            onClick={(e) => {
+              e.preventDefault()
+              const el = document.getElementById('events')
+              if (!el) return
+              const vh = el.firstElementChild?.offsetHeight || window.innerHeight
+              const y = el.getBoundingClientRect().top + window.scrollY + (el.offsetHeight - vh) * 0.97
+              window.scrollTo({ top: y, behavior: 'smooth' })
+            }}
             className="bg-pulse px-6 py-3 text-sm font-bold uppercase tracking-wider text-void transition hover:bg-haze max-md:flex max-md:min-h-12 max-md:items-center max-md:justify-center max-md:px-2 max-md:text-center max-md:text-xs"
           >
             Explore Events
