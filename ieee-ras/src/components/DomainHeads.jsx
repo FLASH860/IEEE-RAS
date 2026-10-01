@@ -228,6 +228,7 @@ export default function DomainHeads() {
       />
 
       <div
+        className="dh-head"
         style={{
           position: 'relative',
           zIndex: 1,
@@ -368,6 +369,7 @@ export default function DomainHeads() {
       </div>
 
       <div
+        className="dh-nav"
         style={{
           position: 'relative',
           zIndex: 1,
@@ -383,11 +385,12 @@ export default function DomainHeads() {
             <path d="M165.66 202.34a8 8 0 0 1-11.32 11.32l-80-80a8 8 0 0 1 0-11.32l80-80a8 8 0 0 1 11.32 11.32L91.31 128Z" />
           </svg>
         </button>
-        <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
+        <div className="dh-dots" style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
           {HEADS.map((_, i) => (
             <button
               key={i}
               onClick={() => setActive(i)}
+              className="dh-dot"
               aria-label="Go to card"
               style={{
                 width: i === active ? 20 : 6,

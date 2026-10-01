@@ -38,8 +38,9 @@ export default function Navbar() {
         }
       }
       if (cur === 'events') {
-        const r = document.getElementById('events').getBoundingClientRect()
-        const p = -r.top / (r.height - window.innerHeight)
+        const ev = document.getElementById('events')
+        const r = ev.getBoundingClientRect()
+        const p = -r.top / (r.height - (ev.firstElementChild?.offsetHeight || window.innerHeight))
         cur = p < 0.3 ? 'team' : 'events'
       }
       if (cur) setActive(cur)
@@ -57,7 +58,9 @@ export default function Navbar() {
     const el = document.getElementById(id === 'team' ? 'events' : id)
     if (!el) return
     const top = el.getBoundingClientRect().top + window.scrollY
-    const y = id === 'events' ? top + (el.offsetHeight - window.innerHeight) * 0.97 : top
+    // the sticky stage is the real viewport height (svh/dvh on phones)
+    const vh = el.firstElementChild?.offsetHeight || window.innerHeight
+    const y = id === 'events' ? top + (el.offsetHeight - vh) * 0.97 : top
     window.scrollTo({ top: y, behavior: 'smooth' })
   }
 
@@ -82,9 +85,12 @@ export default function Navbar() {
     }`
 
   return (
+    <>
+    {/* tap-outside-to-close for the phone menu (outside <header>: its transform would trap a fixed child) */}
+    {open && <div className="fixed inset-0 z-40 md:hidden" onClick={() => setOpen(false)} aria-hidden="true" />}
     <header className="fixed left-1/2 top-4 z-50 w-[min(1120px,calc(100%-2rem))] -translate-x-1/2">
       <nav className="flex items-center justify-between rounded-2xl px-4 py-2.5 md:px-6" style={glass}>
-        <a href="#home" className="flex items-center gap-2.5 no-underline" onClick={() => setOpen(false)}>
+        <a href="#home" className="flex items-center gap-2.5 no-underline max-md:min-h-11" onClick={() => setOpen(false)}>
           <span className="text-sm font-bold uppercase tracking-[0.28em] text-ink">
             IEEE <span className="text-pulse">RAS</span>
           </span>
@@ -120,7 +126,7 @@ export default function Navbar() {
             aria-label="Menu"
             aria-expanded={open}
             onClick={() => setOpen((o) => !o)}
-            className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-lg border border-white/10 bg-transparent text-ink md:hidden"
+            className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-lg border border-white/10 bg-transparent text-ink md:hidden"
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
               {open ? <path d="M6 6l12 12M18 6L6 18" /> : <path d="M4 7h16M4 12h16M4 17h16" />}
@@ -131,14 +137,17 @@ export default function Navbar() {
 
       {/* mobile menu */}
       {open && (
-        <div className="mt-2 rounded-2xl p-3 md:hidden" style={{ ...glass, background: 'rgba(10, 19, 26, 0.7)' }}>
+        <div
+          className="mt-2 max-h-[calc(100dvh-6.5rem)] overflow-y-auto rounded-2xl p-3 md:hidden"
+          style={{ ...glass, background: 'rgba(10, 19, 26, 0.7)' }}
+        >
           <ul className="m-0 flex list-none flex-col p-0">
             {[...LINKS, { id: 'contact', label: 'Join us' }].map((l) => (
               <li key={l.id}>
                 <a
                   href={`#${l.id}`}
                   onClick={(e) => go(e, l.id)}
-                  className={`block rounded-lg px-3 py-3 text-xs font-bold uppercase tracking-[0.2em] no-underline ${
+                  className={`block rounded-lg px-3 py-3.5 text-xs font-bold uppercase tracking-[0.2em] no-underline ${
                     active === l.id ? 'bg-pulse/10 text-pulse' : 'text-ink/80'
                   }`}
                 >
@@ -150,5 +159,6 @@ export default function Navbar() {
         </div>
       )}
     </header>
+    </>
   )
 }

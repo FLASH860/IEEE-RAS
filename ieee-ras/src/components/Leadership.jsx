@@ -36,7 +36,7 @@ export default function Leadership() {
   return (
     <section
       id="leadership"
-      className="relative flex min-h-screen w-full items-center overflow-hidden border-t border-rule bg-void px-8 py-20 md:px-14"
+      className="relative flex min-h-screen w-full items-center overflow-hidden border-t border-rule bg-void px-8 py-20 max-md:min-h-svh max-md:px-5 md:px-14"
     >
       <BgVideo className="absolute inset-0 h-full w-full object-cover" src="/assets/back.mp4" />
       <div className="absolute inset-0 bg-void/40" />
@@ -66,7 +66,7 @@ export default function Leadership() {
             <motion.div
               key={i}
               variants={fadeUp}
-              className={`group relative aspect-[3/4] overflow-hidden rounded-2xl border border-rule bg-panel transition-colors hover:border-pulse/60 ${i === 1 ? '' : 'md:scale-90'}`}
+              className={`group relative aspect-[3/4] overflow-hidden rounded-2xl border border-rule bg-panel transition-colors hover:border-pulse/60 ${i === 1 ? '' : 'md:scale-90'} max-md:mx-auto max-md:w-full max-md:max-w-[320px]`}
             >
               <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-105">
                 {p.photo ? (
@@ -76,7 +76,7 @@ export default function Leadership() {
                 )}
               </div>
               <div className="absolute inset-0 bg-gradient-to-t from-void via-void/40 to-transparent" />
-              <div className="absolute inset-x-0 bottom-0 p-6">
+              <div className="absolute inset-x-0 bottom-0 p-6 max-md:p-5">
                 <p className="text-xs uppercase tracking-[0.3em] text-pulse">{p.role}</p>
                 <h3 className="mt-1 text-2xl font-bold uppercase tracking-wide">{p.name}</h3>
               </div>

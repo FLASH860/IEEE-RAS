@@ -55,9 +55,11 @@ const C = (a) => 'rgba(79,224,244,' + Math.max(0, Math.min(1, a)).toFixed(3) + '
 const L = (a) => 'rgba(142,238,251,' + Math.max(0, Math.min(1, a)).toFixed(3) + ')'
 const MONO = '10px ui-monospace, Menlo, monospace'
 const seeded = (s) => () => (s = (s * 16807) % 2147483647) / 2147483647
+// space kept free at the bottom of a panel for its title + description (taller on phones)
+let botPad = 230
 const region = (h) => {
   const top = 64
-  const bot = Math.max(top + 120, h - 230)
+  const bot = Math.max(top + 120, h - botPad)
   return { top, bot, cy: (top + bot) / 2 }
 }
 const brackets = (ctx, x, y, w, h, k) => {
@@ -348,6 +350,18 @@ export default function FocusDomains() {
   const sceneState = useRef({})
   const [active, setActive] = useState(0)
   const [narrow, setNarrow] = useState(false)
+  const narrowRef = useRef(false)
+  const activeRef = useRef(0)
+  activeRef.current = active
+
+  // phones: reserve more room under the canvas scene for the (longer wrapping) text block
+  useEffect(() => {
+    narrowRef.current = narrow
+    botPad = narrow ? 260 : 230
+    return () => {
+      botPad = 230
+    }
+  }, [narrow])
 
   useEffect(() => {
     const el = rootRef.current
@@ -371,14 +385,18 @@ export default function FocusDomains() {
     // Only animate while the section is on screen (first frame always draws)
     let visible = false
     let running = true
+    let frame = 0
     const tick = (now) => {
       const t = now * MOTION
+      frame++
       const dpr = Math.min(2, window.devicePixelRatio || 1)
       cvs.current.forEach((cv, i) => {
         if (!cv) return
         const w = cv.clientWidth
         const h = cv.clientHeight
         if (!w || !h) return
+        // phones: the three collapsed (dimmed, 84px) panels only need an occasional refresh
+        if (narrowRef.current && i !== activeRef.current && frame % 4) return
         if (cv.width !== Math.round(w * dpr) || cv.height !== Math.round(h * dpr)) {
           cv.width = Math.round(w * dpr)
           cv.height = Math.round(h * dpr)
@@ -426,11 +444,11 @@ export default function FocusDomains() {
         style={{
           maxWidth: '1400px',
           margin: '0 auto',
-          padding: '96px 48px 80px',
+          padding: narrow ? '88px 20px 56px' : '96px 48px 80px',
           boxSizing: 'border-box',
           display: 'flex',
           flexDirection: 'column',
-          gap: '56px',
+          gap: narrow ? '32px' : '56px',
         }}
       >
         <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
@@ -451,7 +469,7 @@ export default function FocusDomains() {
             style={{
               margin: 0,
               maxWidth: '640px',
-              fontSize: '18px',
+              fontSize: narrow ? '16px' : '18px',
               lineHeight: 1.6,
               color: 'var(--color-neutral-300)',
               textWrap: 'pretty',
@@ -468,7 +486,7 @@ export default function FocusDomains() {
           onMouseLeave={() => {
             hovering.current = false
           }}
-          style={{ display: 'flex', flexDirection: narrow ? 'column' : 'row', gap: '18px' }}
+          style={{ display: 'flex', flexDirection: narrow ? 'column' : 'row', gap: narrow ? '12px' : '18px' }}
         >
           {DOMAINS.map((d, i) => {
             const on = i === active
@@ -485,7 +503,7 @@ export default function FocusDomains() {
                   position: 'relative',
                   flex: narrow ? '0 0 auto' : on ? '4 1 0' : '1 1 0',
                   minWidth: 0,
-                  height: narrow ? (on ? '460px' : '84px') : '560px',
+                  height: narrow ? (on ? '500px' : '84px') : '560px',
                   borderRadius: '16px',
                   overflow: 'hidden',
                   border: '1px solid ' + (on ? 'var(--color-accent-700)' : 'var(--color-neutral-700)'),
@@ -521,8 +539,8 @@ export default function FocusDomains() {
                 <div
                   style={{
                     position: 'absolute',
-                    top: '24px',
-                    left: '28px',
+                    top: narrow ? '16px' : '24px',
+                    left: narrow ? '20px' : '28px',
                     fontFamily: 'ui-monospace,Menlo,monospace',
                     fontSize: '12px',
                     letterSpacing: '0.2em',
@@ -535,18 +553,21 @@ export default function FocusDomains() {
                 <div
                   style={{
                     position: 'absolute',
-                    left: narrow ? '84px' : '26px',
-                    bottom: '32px',
+                    left: narrow ? '64px' : '26px',
+                    bottom: narrow ? 'auto' : '32px',
+                    top: narrow ? '50%' : 'auto',
+                    right: narrow ? '16px' : 'auto',
                     writingMode: narrow ? 'horizontal-tb' : 'vertical-rl',
-                    transform: narrow ? 'none' : 'rotate(180deg)',
+                    transform: narrow ? 'translateY(-50%)' : 'rotate(180deg)',
                     opacity: on ? 0 : 1,
                     transition: 'opacity 400ms',
                     fontFamily: 'var(--font-heading)',
                     fontWeight: 600,
-                    fontSize: '15px',
-                    letterSpacing: '0.18em',
+                    fontSize: narrow ? '13px' : '15px',
+                    letterSpacing: narrow ? '0.12em' : '0.18em',
+                    lineHeight: narrow ? 1.3 : undefined,
                     textTransform: 'uppercase',
-                    whiteSpace: 'nowrap',
+                    whiteSpace: narrow ? 'normal' : 'nowrap',
                     color: 'var(--color-neutral-200)',
                     pointerEvents: 'none',
                   }}
@@ -556,10 +577,10 @@ export default function FocusDomains() {
                 <div
                   style={{
                     position: 'absolute',
-                    left: '32px',
-                    bottom: '32px',
-                    width: '380px',
-                    maxWidth: 'calc(100% - 64px)',
+                    left: narrow ? '20px' : '32px',
+                    bottom: narrow ? '24px' : '32px',
+                    width: narrow ? 'calc(100% - 40px)' : '380px',
+                    maxWidth: narrow ? 'none' : 'calc(100% - 64px)',
                     display: 'flex',
                     flexDirection: 'column',
                     gap: '12px',
@@ -576,7 +597,7 @@ export default function FocusDomains() {
                     style={{
                       fontFamily: 'var(--font-heading)',
                       fontWeight: 600,
-                      fontSize: '28px',
+                      fontSize: narrow ? '24px' : '28px',
                       lineHeight: 1.15,
                       letterSpacing: '0.01em',
                       color: 'var(--color-text)',
@@ -586,8 +607,8 @@ export default function FocusDomains() {
                   </div>
                   <div
                     style={{
-                      fontSize: '16px',
-                      lineHeight: 1.6,
+                      fontSize: narrow ? '15px' : '16px',
+                      lineHeight: narrow ? 1.55 : 1.6,
                       color: 'var(--color-neutral-300)',
                       textWrap: 'pretty',
                     }}
