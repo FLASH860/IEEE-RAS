@@ -159,7 +159,9 @@ export default function TeamEvents() {
             {/* featured */}
             <div data-rv className="opacity-0">
               <a
-                href="#"
+                href="https://forms.gle/2GyDehMrW5xe5wBh6"
+                target="_blank"
+                rel="noopener noreferrer"
                 className={`ev-feat ${cardBase}`}
                 style={{
                   padding: 'clamp(14px,3vh,32px) clamp(16px,2vw,34px)',
@@ -174,9 +176,9 @@ export default function TeamEvents() {
                     NEXT UP
                   </span>
                   <span className="border border-rule px-[9px] py-[3px] text-[10px] font-bold tracking-[0.22em] text-dim">
-                    HACKATHON
+                    INTER-COLLEGE
                   </span>
-                  <span className="ml-auto text-[11px] font-semibold tracking-[0.22em] text-haze">24 HRS</span>
+                  <span className="ml-auto text-[11px] font-semibold tracking-[0.22em] text-haze">2–3 HRS</span>
                 </div>
                 <div className="ev-feat-row flex items-center" style={{ gap: 'clamp(14px,2vw,24px)' }}>
                   <div
@@ -190,7 +192,7 @@ export default function TeamEvents() {
                         textShadow: '0 0 28px rgba(34,211,238,0.45)',
                       }}
                     >
-                      10
+                      24
                     </span>
                     <span className="text-[13px] font-bold tracking-[0.3em] text-pulse">OCT</span>
                   </div>
@@ -199,10 +201,10 @@ export default function TeamEvents() {
                       className="font-bold uppercase leading-none tracking-[0.03em]"
                       style={{ fontSize: 'clamp(22px,min(4.4vh,2.4vw),44px)' }}
                     >
-                      AutoBot 24
+                      RAS: Mission Impossible
                     </span>
                     <span className="ev-feat-meta text-dim" style={{ fontSize: 'clamp(15px,1vw,19px)' }}>
-                      Innovation Centre · 9:00 AM
+                      Classroom 103 · 8:30 – 11:30 AM
                     </span>
                   </div>
                   <span className="ev-feat-reg flex flex-none items-center gap-2 whitespace-nowrap text-[13px] font-bold tracking-[0.16em] text-pulse">
@@ -217,13 +219,9 @@ export default function TeamEvents() {
 
             {/* two smaller */}
             <div className="ev-small-grid grid grid-cols-2" style={{ gap: 'clamp(12px,1vw,18px)' }}>
-              {[
-                ['WORKSHOP', 'NOV', '07', 'Drone Design', 'Main Quad · 10:00 AM'],
-                ['TALK', 'NOV', '28', 'Careers Panel', 'MRD Auditorium · 4:00 PM'],
-              ].map(([type, mon, day, title, meta]) => (
-                <div data-rv className="opacity-0" key={title}>
-                  <a
-                    href="#"
+              {[0, 1].map((n) => (
+                <div data-rv className="opacity-0" key={n}>
+                  <div
                     className={`ev-small ${cardBase}`}
                     style={{
                       padding: 'clamp(12px,2.4vh,26px) clamp(16px,1.4vw,26px)',
@@ -232,30 +230,15 @@ export default function TeamEvents() {
                     }}
                   >
                     <div className="pointer-events-none absolute bottom-[10px] right-[10px] h-[10px] w-[10px] border-b border-r border-rule" />
-                    <div className="ev-small-top flex items-center justify-between gap-2">
-                      <span className="border border-rule px-[9px] py-[3px] text-[10px] font-bold tracking-[0.22em] text-dim">
-                        {type}
-                      </span>
-                      <span className="text-[11px] font-semibold tracking-[0.2em] text-dim">{mon}</span>
-                    </div>
-                    <div className="ev-small-day flex items-baseline gap-[10px]">
-                      <span className="font-bold leading-none text-ink" style={{ fontSize: 'clamp(30px,min(5.5vh,3vw),56px)' }}>
-                        {day}
-                      </span>
-                      <span className="h-px flex-1 bg-gradient-to-r from-rule to-transparent" />
-                    </div>
-                    <div className="ev-small-txt flex flex-col gap-[2px]">
+                    <div className="ev-small-txt flex h-full flex-col justify-center gap-[2px]">
                       <span
                         className="font-bold uppercase leading-[1.1] tracking-[0.03em]"
                         style={{ fontSize: 'clamp(16px,min(2.8vh,1.5vw),26px)' }}
                       >
-                        {title}
-                      </span>
-                      <span className="text-dim" style={{ fontSize: 'clamp(14px,0.9vw,17px)' }}>
-                        {meta}
+                        Coming soon
                       </span>
                     </div>
-                  </a>
+                  </div>
                 </div>
               ))}
             </div>
